@@ -7,11 +7,13 @@ _config = YAML.load(File.open(File.join(File.dirname(__FILE__), "/yaml/vagrantco
 
 CONF = _config
 
-Vagrant::Config.run do |config|
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	config.vm.define :mongodb do |mongodb|
     	mongodb.vm.box = "ubuntu_precise32"
 		mongodb.vm.box_url = "http://files.vagrantup.com/precise32.box"
-    	mongodb.vm.network :hostonly, "192.168.1.100"
+		mongodb.vm.network "private_network", ip: "192.168.1.100"
 
 		# This shell provisioner installs librarian-puppet and runs it to install
   		# puppet modules. This has to be done before the puppet provisioning so that
@@ -30,7 +32,8 @@ Vagrant::Config.run do |config|
     	appserver.vm.box = "ubuntu_precise32"
 		appserver.vm.box_url = "http://files.vagrantup.com/precise32.box"
     	appserver.vm.network :hostonly, "192.168.1.101"
-
+		appserver.vm.network "private_network", ip: "192.168.1.101"
+	
 		# This shell provisioner installs librarian-puppet and runs it to install
   		# puppet modules. This has to be done before the puppet provisioning so that
   		# the modules are available when puppet tries to parse its manifests.
