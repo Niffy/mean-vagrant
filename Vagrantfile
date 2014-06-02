@@ -31,7 +31,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	config.vm.define :appserver do |appserver|
     	appserver.vm.box = "ubuntu_precise32"
 		appserver.vm.box_url = "http://files.vagrantup.com/precise32.box"
-    	appserver.vm.network :hostonly, "192.168.1.101"
 		appserver.vm.network "private_network", ip: "192.168.1.101"
 	
 		# This shell provisioner installs librarian-puppet and runs it to install
